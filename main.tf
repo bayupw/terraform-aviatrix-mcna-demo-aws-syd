@@ -65,14 +65,11 @@ module "aws_syd_spoke_prod01" {
 # Instances #
 #############
 
-module "ssm-instance-profile" {
+module "ssm_instance_profile" {
   source  = "bayupw/ssm-instance-profile/aws"
   version = "1.0.0"
 }
 
-##############
-# AWS Sydney #
-##############
 
 module "aws_syd_shared01_ssm" {
   source  = "bayupw/ssm-vpc-endpoint/aws"
@@ -88,7 +85,7 @@ module "aws_syd_shared01_instance" {
   source  = "bayupw/amazon-linux-2/aws"
   version = "1.0.0"
 
-  instance_hostname    = "syd-shared01"
+  instance_hostname    = "syd-shared01-instance"
   vpc_id               = module.aws_syd_spoke_shared01.vpc.vpc_id
   subnet_id            = module.aws_syd_spoke_shared01.vpc.private_subnets[0].subnet_id
   key_name             = "ec2_keypair"
@@ -117,7 +114,7 @@ module "aws_syd_prod01_instance" {
   source  = "bayupw/amazon-linux-2/aws"
   version = "1.0.0"
   
-  instance_hostname    = "syd-prod01"
+  instance_hostname    = "syd-prod01-instance"
   vpc_id               = module.aws_syd_spoke_prod01.vpc.vpc_id
   subnet_id            = module.aws_syd_spoke_prod01.vpc.private_subnets[0].subnet_id
   key_name             = "ec2_keypair"
