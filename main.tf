@@ -1,3 +1,5 @@
+data "aws_region" "current" {}
+
 ##############
 # AWS Sydney #
 ##############
@@ -8,7 +10,7 @@ module "aws_syd_transit01" {
 
   name                   = "aws-syd-transit01"
   cloud                  = "aws"
-  region                 = "ap-southeast-2"
+  region                 = data.aws_region.current.name
   cidr                   = cidrsubnet(var.supernet, 7, 0)
   account                = var.aws_account
   instance_size          = "t2.micro" #firenet > "c5.xlarge"
@@ -29,7 +31,7 @@ module "aws_syd_spoke_shared01" {
   name          = "aws-syd-spoke-shared01"
   cloud         = "AWS"
   cidr          = cidrsubnet(var.supernet, 8, 11)
-  region        = "ap-southeast-2"
+  region        = data.aws_region.current.name
   account       = var.aws_account
   instance_size = "t2.micro"
   single_az_ha  = false
@@ -44,7 +46,7 @@ module "aws_syd_spoke_prod01" {
   name          = "aws-syd-spoke-prod01"
   cloud         = "AWS"
   cidr          = cidrsubnet(var.supernet, 8, 12)
-  region        = "ap-southeast-2"
+  region        = data.aws_region.current.name
   account       = var.aws_account
   instance_size = "t2.micro"
   single_az_ha  = false
